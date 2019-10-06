@@ -1,0 +1,17 @@
+<div class="play-bar">
+  <div class="avatar"></div>
+  <div class="name">
+    <span class="song-name">{{ songDetail.songName }}</span>
+    <span class="artist-name">{{ songDetail.artistName }}</span>
+  </div>
+  <div class="play-mode">
+    <span (click)="switchMode(playModeIndex)">{{ playMode[playModeIndex] }}</span>
+  </div>
+  <div class="operation">
+    <span>prev</span>
+    <span (click)="togglePlay()">{{ songDetail.playing ? 'pause' : 'play' }}</span>
+    <span (click)="nextPlay()">next</span>
+  </div>
+  <div>{{ songDetail.songUrl }}</div>
+</div>
+<audio src="{{ songDetail.songUrl }}" #audioPlayer autoplay (ended)="playCompletes(playModeIndex, songDetail)"></audio>

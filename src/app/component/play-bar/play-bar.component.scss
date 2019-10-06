@@ -1,0 +1,20 @@
+.play-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 15px;
+  background: #fff;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+}
+
+.operation {
+  span {
+    margin: 5px;
+  }
+}
