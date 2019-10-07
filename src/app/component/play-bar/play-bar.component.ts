@@ -10,7 +10,10 @@ export class PlayBarComponent implements OnInit {
   // song list
   songList: Array<any> = [
     { songUrl: 'assets/music/有美人兮.mp3', songName: '有美人兮', artistName: '赵方婧 / 王梓钰' },
-    { songUrl: 'assets/music/云烟成雨.mp3', songName: '云烟成雨', artistName: '房东的猫' }
+    { songUrl: 'assets/music/云烟成雨.mp3', songName: '云烟成雨', artistName: '房东的猫' },
+    { songUrl: 'assets/music/童话镇_发er陈一.mp3', songName: '童话镇', artistName: '陈一发儿' },
+    { songUrl: 'assets/music/琵琶行.mp3', songName: '琵琶行', artistName: '徒有琴' },
+    { songUrl: 'assets/music/可念不可说.mp3', songName: '可念不可说', artistName: '崔子格' },
   ];
   // currently playing song
   songDetail: any = {};
@@ -18,9 +21,16 @@ export class PlayBarComponent implements OnInit {
   playMode: Array<string> = ['list', 'single', 'random'];
   // play mode index
   playModeIndex: number = 0;
+  // play history, used to return to the previous track
+  private playHistory: Array<any> = [];
 
   @ViewChild('audioPlayer', { static: true })
   audioPlayer: ElementRef;
+  @ViewChild('progressBar', { static: true })
+  progressBar: ElementRef;
+  /* @ViewChild('progressBar', { static: true, read: ViewContainerRef })
+  progressBar: ViewContainerRef;
+  // elementInput = this.progressBar.element.nativeElement */
 
   constructor() { }
 
@@ -71,9 +81,26 @@ export class PlayBarComponent implements OnInit {
 
   // song playback completes
   playCompletes(playModeIndex, songDetail) {
-    console.log(songDetail);
-    // 0-list 1-single 2-random
-    const songsLength = this.songList.length;
+    this.songDetail = this.switchSong(playModeIndex);
+    // reset value of progress bar
+    const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
+    inputProgress.value = '0';
+  }
+
+  // audio message loadedmetadata
+  playLoadedmetadata(songDetail) {
+    const audio: HTMLAudioElement = this.audioPlayer.nativeElement;
+    const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
+    inputProgress.max = new String(audio.duration) as string;
+    inputProgress.value = '0';
+  }
+
+  // audio timeupdate
+  // update currentTime of audio to customized progress bar
+  playTimeupdate() {
+    const audio: HTMLAudioElement = this.audioPlayer.nativeElement;
+    const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
+    inputProgress.value = new String(audio.currentTime) as string;
   }
 
   // switch song
@@ -90,7 +117,7 @@ export class PlayBarComponent implements OnInit {
 
     switch (playModeIndex) {
       case 0:
-        if (songIndex === -1) {
+        if (songIndex === -1 || typeof songIndex === 'undefined') {
           songIndex = 0;
         } else if (songIndex < songsLength - 1) {
           songIndex += 1;
@@ -111,4 +138,21 @@ export class PlayBarComponent implements OnInit {
 
     return switchedSong;
   }
+
+  // change / input volume
+  handleVolume(volume) {
+    const audio = this.audioPlayer.nativeElement;
+    audio.volume = volume;
+  }
+
+  handleProgress(progress) {
+    const audio = this.audioPlayer.nativeElement;
+    audio.currentTime = progress;
+  }
 }
+/*
+  返回上一曲：
+    每播放一首歌曲，将其添加至缓存列表，返回上一曲时，删除最后一首，并将删除后的列表中的最后一首播放，
+    若删除列表中最后一首后，列表为空，此时视播放模式选择上一曲。若为随机播放，则从列表中随机选择一首，
+    若非随机播放，则从歌曲列表中查找当前播放歌曲位置，并播放列表中的上一首。
+*/

@@ -1,4 +1,8 @@
 <div class="play-bar">
+  <div class="progressBar">
+    <input type="range" #progressBar (change)="handleProgress(progressBar.value)" step="1" min="0"
+      max="0" value="0" />
+  </div>
   <div class="avatar"></div>
   <div class="name">
     <span class="song-name">{{ songDetail.songName }}</span>
@@ -12,6 +16,10 @@
     <span (click)="togglePlay()">{{ songDetail.playing ? 'pause' : 'play' }}</span>
     <span (click)="nextPlay()">next</span>
   </div>
-  <div>{{ songDetail.songUrl }}</div>
+  <!-- <div>{{ songDetail.songUrl }}</div> -->
+  <div class="progress-bar">
+    <input type="range" #volume (input)="handleVolume(volume.value)" step="0.01" max="1.0" min="0" value="1.0" />
+  </div>
 </div>
-<audio src="{{ songDetail.songUrl }}" #audioPlayer autoplay (ended)="playCompletes(playModeIndex, songDetail)"></audio>
+<audio src="{{ songDetail.songUrl }}" #audioPlayer (loadedmetadata)="playLoadedmetadata(songDetail)"
+  (ended)="playCompletes(playModeIndex, songDetail)" (timeupdate)="playTimeupdate()"></audio>
