@@ -12,7 +12,7 @@
     <span (click)="switchMode(playModeIndex)">{{ playMode[playModeIndex] }}</span>
   </div>
   <div class="operation">
-    <span>prev</span>
+    <span (click)="prevPlay()">prev</span>
     <span (click)="togglePlay()">{{ songDetail.playing ? 'pause' : 'play' }}</span>
     <span (click)="nextPlay()">next</span>
   </div>
@@ -22,4 +22,4 @@
   </div>
 </div>
 <audio src="{{ songDetail.songUrl }}" #audioPlayer (loadedmetadata)="playLoadedmetadata(songDetail)"
-  (ended)="playCompletes(playModeIndex, songDetail)" (timeupdate)="playTimeupdate()"></audio>
+  (ended)="playComplete(playModeIndex, songDetail)" (timeupdate)="playTimeupdate()"></audio>

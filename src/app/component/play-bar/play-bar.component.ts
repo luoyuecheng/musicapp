@@ -36,14 +36,32 @@ export class PlayBarComponent implements OnInit {
 
   ngOnInit() {
     if (!this.songDetail || !this.songDetail.songUrl) {
-      // this.songDetail = {
-      //   // songUrl: 'file:///home/luoyuecheng/music/云烟成雨.mp3',
-      //   songUrl: 'assets/music/云烟成雨.mp3',
-      //   songName: '风月',
-      //   artistName: '黄龄',
-      //   playing: false
-      // }
-      this.songDetail = this.switchSong(this.playModeIndex);
+      this.songDetail = {
+        // songUrl: 'file:///home/luoyuecheng/music/云烟成雨.mp3',
+        songUrl: 'assets/music/云烟成雨.mp3',
+        songName: '风月',
+        artistName: '黄龄',
+        playing: false
+      }
+      this.playHistory.push({ ...this.songDetail, playing: true });
+      // this.songDetail = this.switchSong(this.playModeIndex);
+    }
+  }
+
+  // prevPlay, play the previous track, or select a song to play up in the list
+  prevPlay() {
+    if (this.playHistory && this.songDetail) {
+      const historyIndex = this.playHistory.findIndex(song => {
+        const isRight = song.playing && song.songUrl === this.songDetail.songUrl;
+        song.playing = false;
+        return isRight;
+      });
+
+      if (historyIndex > 0) {
+        this.songDetail = this.playHistory[historyIndex - 1];
+        this.togglePlay();
+        return true;
+      }
     }
   }
 
@@ -65,7 +83,47 @@ export class PlayBarComponent implements OnInit {
 
   // nextPlay select next song
   nextPlay() {
-    this.songDetail = this.switchSong(this.playModeIndex);
+    // this.songDetail = this.switchSong(this.playModeIndex);
+    // songs list length
+    const songsLength = this.songList.length;
+    let songIndex: number;
+    if (this.songList) {
+      songIndex = this.songList.findIndex(song => song.songUrl === this.songDetail.songUrl);
+    }
+
+    let switchedSong;
+
+    switch (this.playModeIndex) {
+      case 0:
+        if (songIndex === -1 || typeof songIndex === 'undefined') {
+          songIndex = 0;
+        } else if (songIndex < songsLength - 1) {
+          songIndex += 1;
+        } else {
+          songIndex = 0;
+        }
+        switchedSong = this.songList[songIndex];
+        break;
+      default:
+        if (songIndex < songsLength - 1) {
+          songIndex -= 1;
+        } else {
+          songIndex = 0;
+        }
+        switchedSong = this.songList[songIndex];
+        break;
+    }
+
+    const historyIndex = this.playHistory.findIndex(_ =>
+      _.playing && _.songUrl === this.songDetail.songUrl);
+
+    this.playHistory = this.playHistory.slice(0, historyIndex + 1);
+    this.playHistory[historyIndex]['playing'] = false;
+
+    this.songDetail = switchedSong;
+    this.playHistory.push({ ...switchedSong, playing: true });
+
+    return switchedSong;
   }
 
   // switch play mode
@@ -79,9 +137,9 @@ export class PlayBarComponent implements OnInit {
     return true;
   }
 
-  // song playback completes
-  playCompletes(playModeIndex, songDetail) {
-    this.songDetail = this.switchSong(playModeIndex);
+  // song playback complete
+  playComplete(playModeIndex, songDetail) {
+    // this.songDetail = this.switchSong(playModeIndex);
     // reset value of progress bar
     const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
     inputProgress.value = '0';
@@ -105,8 +163,12 @@ export class PlayBarComponent implements OnInit {
 
   // switch song
   // playModeIndex: 0-list 1-single 2-random
-  switchSong(playModeIndex: number = 0) {
-    // songs list length
+  // operationType: prev, next, complete
+  switchSong(operationType: string) {
+    if (this[operationType] instanceof Function) {
+      this[operationType].call(this);
+    }
+    /* // songs list length
     const songsLength = this.songList.length;
     let songIndex: number;
     if (this.songList) {
@@ -115,7 +177,7 @@ export class PlayBarComponent implements OnInit {
 
     let switchedSong;
 
-    switch (playModeIndex) {
+    switch (this.playModeIndex) {
       case 0:
         if (songIndex === -1 || typeof songIndex === 'undefined') {
           songIndex = 0;
@@ -136,7 +198,7 @@ export class PlayBarComponent implements OnInit {
         break;
     }
 
-    return switchedSong;
+    return switchedSong; */
   }
 
   // change / input volume
