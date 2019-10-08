@@ -114,8 +114,22 @@ export class PlayBarComponent implements OnInit {
         break;
     }
 
+    // play history is empty array -- no history
+    if (!this.playHistory.length) {
+      this.playHistory.push({ ...switchedSong, playing: true });
+      this.songDetail = switchedSong;
+      return switchedSong;
+    }
+
     const historyIndex = this.playHistory.findIndex(_ =>
       _.playing && _.songUrl === this.songDetail.songUrl);
+
+    // current song does not exist playHistory
+    if (historyIndex === -1) {
+      this.playHistory.push({ ...switchedSong, playing: true });
+      this.songDetail = switchedSong;
+      return switchedSong;
+    }
 
     this.playHistory = this.playHistory.slice(0, historyIndex + 1);
     this.playHistory[historyIndex]['playing'] = false;
@@ -168,37 +182,6 @@ export class PlayBarComponent implements OnInit {
     if (this[operationType] instanceof Function) {
       this[operationType].call(this);
     }
-    /* // songs list length
-    const songsLength = this.songList.length;
-    let songIndex: number;
-    if (this.songList) {
-      songIndex = this.songList.findIndex(song => song.songUrl === this.songDetail.songUrl);
-    }
-
-    let switchedSong;
-
-    switch (this.playModeIndex) {
-      case 0:
-        if (songIndex === -1 || typeof songIndex === 'undefined') {
-          songIndex = 0;
-        } else if (songIndex < songsLength - 1) {
-          songIndex += 1;
-        } else {
-          songIndex = 0;
-        }
-        switchedSong = this.songList[songIndex];
-        break;
-      default:
-        if (songIndex < songsLength - 1) {
-          songIndex -= 1;
-        } else {
-          songIndex = 0;
-        }
-        switchedSong = this.songList[songIndex];
-        break;
-    }
-
-    return switchedSong; */
   }
 
   // change / input volume
