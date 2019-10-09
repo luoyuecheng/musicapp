@@ -62,6 +62,25 @@ export class PlayBarComponent implements OnInit {
         this.togglePlay();
         return true;
       }
+
+      // modeType is 2 - random
+      if (this.playModeIndex === 2) {
+        const songsLength = this.songList.length;
+
+        if (songsLength === 1) {
+          this.songDetail = this.songList[0];
+          return true;
+        }
+
+        const songFilter = this.songList.filter(song => song.songUrl !== this.songDetail.songUrl);
+        const randomIndex = Math.floor(Math.random() * songFilter.length);
+        this.songDetail = songFilter[randomIndex];
+        return true;
+      }
+
+      let songIndex = this.songList.findIndex(song => song.songUrl === this.songDetail.songUrl);
+      songIndex = songIndex < 1 ? this.songList.length -1 : songIndex - 1;
+      this.songDetail = this.songList[songIndex];
     }
   }
 

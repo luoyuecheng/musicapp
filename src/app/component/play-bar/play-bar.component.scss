@@ -6,6 +6,11 @@
   display: flex;
   padding: 15px;
   background: #fff;
+  flex-wrap: wrap;
+}
+
+.progress-bar {
+  flex: 1 1 100%;
 }
 
 .name {
