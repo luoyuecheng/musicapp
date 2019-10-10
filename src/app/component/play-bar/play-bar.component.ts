@@ -224,7 +224,14 @@ export class PlayBarComponent implements OnInit {
   }
 
   setProgress(e: MouseEvent) {
-    console.log((e.target as HTMLElement).clientWidth);
+    // console.log((e.target as HTMLElement).clientWidth);
+    // console.log(e.offsetX);
+    const progressBar = this.progressBar.nativeElement.parentElement;
+    const progressBarWidth = progressBar.clientWidth;
+    const audio = this.audioPlayer.nativeElement;
+    const mouseOffsetX = e.offsetX;
+    const setAudioTime = Math.floor(mouseOffsetX / progressBarWidth * audio.duration);
+    audio.currentTime = setAudioTime;
   }
 }
 /*
