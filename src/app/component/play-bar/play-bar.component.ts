@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { EventEmitter } from 'events';
 
 @Component({
@@ -32,7 +32,9 @@ export class PlayBarComponent implements OnInit {
   progressBar: ViewContainerRef;
   // elementInput = this.progressBar.element.nativeElement */
 
-  constructor() { }
+  constructor(
+    private renderer: Renderer2,
+  ) { }
 
   ngOnInit() {
     if (!this.songDetail || !this.songDetail.songUrl) {
@@ -174,24 +176,31 @@ export class PlayBarComponent implements OnInit {
   playComplete(playModeIndex, songDetail) {
     // this.songDetail = this.switchSong(playModeIndex);
     // reset value of progress bar
-    const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
-    inputProgress.value = '0';
+    // const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
+    // inputProgress.value = '0';
+
+    const inputProgress: HTMLElement = this.progressBar.nativeElement;
+    this.renderer.setStyle(inputProgress, 'width', 0);
   }
 
   // audio message loadedmetadata
   playLoadedmetadata(songDetail) {
-    const audio: HTMLAudioElement = this.audioPlayer.nativeElement;
-    const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
-    inputProgress.max = new String(audio.duration) as string;
-    inputProgress.value = '0';
+    // const audio: HTMLAudioElement = this.audioPlayer.nativeElement;
+    // const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
+    // inputProgress.max = new String(audio.duration) as string;
+    // inputProgress.value = '0';
   }
 
   // audio timeupdate
   // update currentTime of audio to customized progress bar
   playTimeupdate() {
     const audio: HTMLAudioElement = this.audioPlayer.nativeElement;
-    const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
-    inputProgress.value = new String(audio.currentTime) as string;
+    // const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
+    // inputProgress.value = new String(audio.currentTime) as string;
+
+    const inputProgress: HTMLElement = this.progressBar.nativeElement;
+    const width = Math.floor(audio.currentTime / audio.duration * 10000) / 100;
+    this.renderer.setStyle(inputProgress, 'width', width + '%');
   }
 
   // switch song
@@ -212,6 +221,10 @@ export class PlayBarComponent implements OnInit {
   handleProgress(progress) {
     const audio = this.audioPlayer.nativeElement;
     audio.currentTime = progress;
+  }
+
+  setProgress(e: MouseEvent) {
+    console.log((e.target as HTMLElement).clientWidth);
   }
 }
 /*

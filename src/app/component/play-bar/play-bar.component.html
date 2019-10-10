@@ -1,7 +1,7 @@
 <div class="play-bar">
-  <div class="progress-bar">
-    <input type="range" #progressBar (change)="handleProgress(progressBar.value)" step="1" min="0"
-      max="0" value="0" />
+  <div class="progress-bar" (click)="setProgress($event)">
+    <div class="progress" #progressBar></div>
+    <!-- <input type="range" #progressBar (change)="handleProgress(progressBar.value)" step="1" min="0" max="0" value="0" /> -->
   </div>
   <div class="avatar"></div>
   <div class="name">
