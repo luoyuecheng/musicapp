@@ -23,6 +23,7 @@ export class PlayBarComponent implements OnInit {
   playModeIndex: number = 0;
   // play history, used to return to the previous track
   private playHistory: Array<any> = [];
+  private autoplay: boolean = false;
 
   @ViewChild('audioPlayer', { static: true })
   audioPlayer: ElementRef;
@@ -87,14 +88,18 @@ export class PlayBarComponent implements OnInit {
   }
 
   // switch play or pause
-  togglePlay() {
+  togglePlay(play = false) {
     const audio = this.audioPlayer.nativeElement;
-    if (!audio.paused) {
+    if (!play && !audio.paused) {
       audio.pause();
       this.songDetail.playing = false;
       return null;
     }
     const playPromise = audio.play();
+    const autoplay = audio.autoplay;
+    if (!autoplay) {
+      audio.autoplay = this.autoplay = true;
+    }
     if (playPromise) {
       playPromise.then(_ => {
         this.songDetail.playing = true;
@@ -181,6 +186,7 @@ export class PlayBarComponent implements OnInit {
 
     const inputProgress: HTMLElement = this.progressBar.nativeElement;
     this.renderer.setStyle(inputProgress, 'width', 0);
+    this.nextPlay();
   }
 
   // audio message loadedmetadata
@@ -189,6 +195,15 @@ export class PlayBarComponent implements OnInit {
     // const inputProgress: HTMLInputElement = this.progressBar.nativeElement;
     // inputProgress.max = new String(audio.duration) as string;
     // inputProgress.value = '0';
+  }
+
+  canplay() {
+    this.togglePlay(true);
+  }
+
+  // error event
+  playError() {
+    this.nextPlay();
   }
 
   // audio timeupdate

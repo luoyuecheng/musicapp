@@ -22,4 +22,4 @@
   </div>
 </div>
 <audio src="{{ songDetail.songUrl }}" #audioPlayer (loadedmetadata)="playLoadedmetadata(songDetail)"
-  (ended)="playComplete(playModeIndex, songDetail)" (timeupdate)="playTimeupdate()"></audio>
+  (ended)="playComplete(playModeIndex, songDetail)" (timeupdate)="playTimeupdate()" (error)="playError()" (canplay)="canplay()"></audio>
