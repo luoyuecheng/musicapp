@@ -32,9 +32,25 @@
 }
 
 .operation {
-  span {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
     margin: 5px;
   }
+
+  svg:not(:first-child):not(:last-child) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.hidden {
+  display: none;
 }
 
 /* 动画 进度条 */
