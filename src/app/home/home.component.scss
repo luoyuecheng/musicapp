@@ -1,0 +1,13 @@
+.home {
+  width: 100vw;
+  height: calc(100vh - 84px);
+  display: flex;
+}
+
+.operates {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}

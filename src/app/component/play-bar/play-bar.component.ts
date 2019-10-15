@@ -32,6 +32,8 @@ export class PlayBarComponent implements OnInit {
   /* @ViewChild('progressBar', { static: true, read: ViewContainerRef })
   progressBar: ViewContainerRef;
   // elementInput = this.progressBar.element.nativeElement */
+  @ViewChild('volume', { static: true })
+  volumeBar: ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -198,7 +200,7 @@ export class PlayBarComponent implements OnInit {
   }
 
   canplay() {
-    this.togglePlay(true);
+    // this.togglePlay(true);
   }
 
   // error event
@@ -228,9 +230,19 @@ export class PlayBarComponent implements OnInit {
   }
 
   // change / input volume
-  handleVolume(volume) {
+  handleVolume(e) {
+    const volumeBarProgress = this.volumeBar.nativeElement;
+    const volumeBar = volumeBarProgress.parentElement;
+    const widthVolumeBar = volumeBar.clientWidth;
     const audio = this.audioPlayer.nativeElement;
-    audio.volume = volume;
+    let volume = Math.floor(e.offsetX / widthVolumeBar * 100);
+    if (volume > 100) {
+      volume = 100;
+    } else if (volume < 0) {
+      volume = 0;
+    }
+    audio.volume = volume / 100;
+    this.renderer.setStyle(volumeBarProgress, 'width', volume + '%');
   }
 
   handleProgress(progress) {

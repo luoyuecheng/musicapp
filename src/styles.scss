@@ -1,1 +1,79 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+body, div, h1, h2, h3, h4, h5, h6, hr, p, dl, dt, dd, ul, ol, li, article,
+aside, blockquote, button, code, details, fieldset, figcaption, figure,
+footer, form, header, hgroup, input, legend, menu, nav, pre, section,
+textarea, th, td, select {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+}
+
+html {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #fff;
+    font: 14px/1.5 'Helvetica Neuc', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Source Code Variable', 'Microsoft YaHei', Arial, sans-serif;
+    color: rgba(0, 0, 0, 1);
+}
+
+code {
+    font-family: 'Helvetica Neuc', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Source Code Variable', 'Microsoft YaHei', Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b {
+    font-weight: normal;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+a {
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+
+textarea {
+    resize: none;
+}
+
+input, button, select, textarea {
+    outline: none;
+}
+
+.clearfix::after {
+    content: "";
+    visibility: hidden;
+    height: 0;
+    display: block;
+    clear: both;
+}
+
+.clearfix::after {
+    zoom: 1;
+}
+
+
+body {
+  background-image: url('./assets/你别是个傻子吧.jpg');
+  background-size: cover;
+}
