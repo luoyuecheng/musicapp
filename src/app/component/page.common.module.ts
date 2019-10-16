@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { PlayBarComponent } from './play-bar/play-bar.component';
 
+import { SongService } from './play-bar/song.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,9 @@ import { PlayBarComponent } from './play-bar/play-bar.component';
   exports: [
     CommonModule,
     PlayBarComponent
+  ],
+  providers: [
+    SongService
   ]
 })
 export class PageCommonModule { }

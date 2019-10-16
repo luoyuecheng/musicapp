@@ -1,6 +1,9 @@
 <div class="home">
   <ul class="operates">
-    <li><a>本地音乐</a></li>
+    <li><a (click)="importMusic()">本地音乐</a></li>
     <li><a>播放列表</a></li>
   </ul>
+  <div [ngClass]="{ 'all-list': true, 'hidden': false }">
+    <app-song-list></app-song-list>
+  </div>
 </div>

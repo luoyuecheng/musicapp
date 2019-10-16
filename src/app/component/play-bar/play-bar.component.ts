@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { EventEmitter } from 'events';
+import { SongService } from './song.service';
 
 @Component({
   selector: 'app-play-bar',
@@ -37,9 +37,19 @@ export class PlayBarComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
+    private songService: SongService,
   ) { }
 
   ngOnInit() {
+    const songList = this.songService.getSongList();
+    this.songService.eventEmit.subscribe((value?: any) => {
+      if (value === 'song') {
+        const songList = this.songService.getSongList();
+        console.log(songList);
+        this.songList = songList;
+      }
+    })
+    console.log(songList)
     if (!this.songDetail || !this.songDetail.songUrl) {
       this.songDetail = {
         // songUrl: 'file:///home/luoyuecheng/music/云烟成雨.mp3',

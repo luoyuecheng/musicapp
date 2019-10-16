@@ -11,3 +11,12 @@
   justify-content: center;
   flex-flow: column;
 }
+
+.all-list {
+  flex: 0 0 60%;
+  box-shadow: 1px -4px 2px 2px #82fff4;
+}
+
+.hidden {
+  display: none;
+}
