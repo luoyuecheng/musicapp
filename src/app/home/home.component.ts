@@ -25,13 +25,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    document.addEventListener('drop', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      for (const f of (e.dataTransfer as any).files) {
-        console.log('File(s) you dragged here: ', f.path);
-      }
-    })
   }
 
   importMusic() {

@@ -1,1 +1,9 @@
-<p>song-list works!</p>
+<div class="list-box">
+  <ul>
+    <li *ngFor="let song of songList">{{ song.songName }}</li>
+  </ul>
+  <div class="button">
+    <button (click)="importFolder()">导入文件夹</button>
+    <button>导入歌曲</button>
+  </div>
+</div>
