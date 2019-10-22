@@ -1,4 +1,6 @@
 .list-box {
+  color: #fff;
+
   .button {
     text-align: center;
 
@@ -16,4 +18,23 @@
       margin-left: .5em;
     }
   }
+}
+
+.song-list {
+  display: table;
+
+  li {
+    display: table-row;
+  }
+
+  li > span {
+    display: table-cell;
+    width: 25%;
+
+    &:first-child {
+      width: 10%;
+    }
+  }
+
+
 }

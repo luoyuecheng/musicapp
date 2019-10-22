@@ -1,6 +1,16 @@
 <div class="list-box">
-  <ul>
-    <li *ngFor="let song of songList">{{ song.songName }}</li>
+  <ul class="song-list">
+    <li>
+      <span>#</span>
+      <span>Title</span>
+      <span>Contributing artist</span>
+    </li>
+    <li *ngFor="let song of songList; index as songIndex">{{ song.songName }}</li>
+    <li>
+      <span>1</span>
+      <span>{{ testSong.songName }}</span>
+      <span>{{ testSong.artistName }}</span>
+    </li>
   </ul>
   <div class="button">
     <button (click)="importFolder()">导入文件夹</button>

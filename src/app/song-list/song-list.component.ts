@@ -11,6 +11,10 @@ import { isElectron, dialog, fs } from '../utils/electron';
 })
 export class SongListComponent implements OnInit {
   public songList: any[];
+  private testSong: Object = {
+    songName: '童话镇_发er陈一',
+    songUrl: '/assets/music/童话镇_发er陈一.mp3',
+  };
 
   constructor(
     private songService: SongService,
