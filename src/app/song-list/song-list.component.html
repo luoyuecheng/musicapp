@@ -1,15 +1,32 @@
 <div class="list-box">
   <ul class="song-list">
     <li>
-      <span>#</span>
-      <span>Title</span>
-      <span>Contributing artist</span>
+      <div>
+        <span>#</span>
+      </div>
+      <div>
+        <span>Title</span>
+      </div>
+      <div>
+        <span>Contributing artist</span>
+      </div>
     </li>
-    <li *ngFor="let song of songList; index as songIndex">{{ song.songName }}</li>
-    <li>
-      <span>1</span>
-      <span>{{ testSong.songName }}</span>
-      <span>{{ testSong.artistName }}</span>
+    <li *ngFor="let song of songList; index as songIndex">
+      <div>
+        <span class="song-index">{{ songIndex + 1 }}</span>
+        <svg t="1571035516927" class="play-song" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7549" width="200" height="200">
+          <title>播放</title>
+          <path
+            d="M862.7 528L178.4 908.3c-7.9 4.4-14.7 5-20.4 1.5-5.6-3.5-8.5-9.6-8.5-18.5V132.8c0-8.9 2.8-15.1 8.5-18.5 5.6-3.5 12.5-2.9 20.4 1.5L862.7 496c7.9 4.4 11.8 9.8 11.8 15.9 0 6.3-4 11.7-11.8 16.1z"
+            p-id="7550"></path>
+        </svg>
+      </div>
+      <div>
+        <span>{{ song.songName }}</span>
+      </div>
+      <div>
+        <span>{{ song.artistName }}</span>
+      </div>
     </li>
   </ul>
   <div class="button">

@@ -1,5 +1,6 @@
 .list-box {
   color: #fff;
+  padding: .625rem;
 
   .button {
     text-align: center;
@@ -25,16 +26,35 @@
 
   li {
     display: table-row;
+
+    .play-song {
+      display: none;
+      width: 10px;
+      height: 10px;
+      fill: red;
+      cursor: pointer;
+    }
+
+    &:hover .song-index {
+      display: none;
+    }
+
+    &:hover .play-song {
+      display: block;
+    }
   }
 
-  li > span {
+  li > div {
     display: table-cell;
     width: 25%;
+
+    span {
+      cursor: pointer;
+    }
 
     &:first-child {
       width: 10%;
     }
   }
-
 
 }
